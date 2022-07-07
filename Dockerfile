@@ -1,6 +1,5 @@
 ARG OVERLAY_VERSION="v3.1.1.2"
 ARG OVERLAY_ARCH
-ARG OVERLAY_KEY="6101B2783B2FD161"
 
 # Builder
 FROM golang:alpine AS builder
@@ -55,8 +54,6 @@ RUN apk --no-cache upgrade \
     "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${OVERLAY_ARCH}.tar.gz" \
     && curl -o /tmp/s6-overlay.tar.gz.sig -L \
     "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${OVERLAY_ARCH}.tar.gz.sig" \
-    && gpg --keyserver pgp.surfnet.nl --recv-keys ${OVERLAY_KEY} \
-    && gpg --verify /tmp/s6-overlay.tar.gz.sig /tmp/s6-overlay.tar.gz \
     && tar xzf /tmp/s6-overlay.tar.gz -C / \
     && apk del curl gnupg \
     && rm -rf /tmp/* /var/cache/apk/* /var/lib/apk/lists/*

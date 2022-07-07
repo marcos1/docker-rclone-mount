@@ -42,6 +42,12 @@ ENV DEBUG="false" \
 
 COPY --from=builder /go/src/github.com/rclone/rclone/rclone /usr/local/sbin/
 
+RUN set -ex \
+      && export OVERLAY_ARCH=$(uname -m) \
+      && if [ "${OVERLAY_ARCH}" = "x86_64" ]; then export OVERLAY_ARCH=amd64; fi \
+      && if [ "${OVERLAY_ARCH}" = "armv7l" ]; then export OVERLAY_ARCH=arm; fi \
+      && if [ "${OVERLAY_ARCH}" = "aarch64" ]; then export OVERLAY_ARCH=arm64; fi
+
 RUN apk --no-cache upgrade \
     && apk add --no-cache --update ca-certificates fuse fuse-dev curl gnupg \
     && echo "Installing S6 Overlay" \

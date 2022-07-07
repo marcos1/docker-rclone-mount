@@ -52,9 +52,6 @@ RUN apk --no-cache upgrade \
     && echo "Installing S6 Overlay" \
     && curl -o /tmp/s6-overlay.tar.gz -L \
     "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${OVERLAY_ARCH}.tar.gz" \
-    && curl -o /tmp/s6-overlay.tar.gz.sig -L \
-    "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${OVERLAY_ARCH}.tar.gz.sig" \
-    && tar xzf /tmp/s6-overlay.tar.gz -C / \
     && apk del curl gnupg \
     && rm -rf /tmp/* /var/cache/apk/* /var/lib/apk/lists/*
 

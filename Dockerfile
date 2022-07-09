@@ -1,7 +1,4 @@
 ARG RCLONE_VERSION="v1.58.1"
-ARG OVERLAY_VERSION="v2.11.1.2"
-ARG OVERLAY_ARCH="aarch64"
-ARG OVERLAY_KEY="6101B2783B2FD161"
 
 
 # Builder
@@ -14,19 +11,27 @@ WORKDIR /go/src/github.com/rclone/rclone/
 ENV GOPATH="/go" \
     GO111MODULE="on"
 
-RUN apk add --no-cache --update ca-certificates go git gcc\
-    && git clone https://github.com/rclone/rclone.git \
-    && cd rclone \
-    && git checkout tags/${RCLONE_VERSION} \
-    && go build
+RUN \
+    echo "*** Installing packages ***" && \
+    apk add --no-cache --update \
+        ca-certificates \
+        go \
+        git \
+        gcc
+
+RUN \
+    echo "*** Cloning rlcone source ***" && \
+    git clone https://github.com/rclone/rclone.git \
+    && cd rclone && \
+    echo "*** Building Rclone Source ***" && \
+    && go build && \
+    echo "*** Finished building source ***"
+
 
 
 ## Image
-FROM alpine:latest
+FROM ghcr.io/linuxserver/baseimage-alpine:3.15
 
-ARG OVERLAY_VERSION
-ARG OVERLAY_ARCH
-ARG OVERLAY_KEY
 
 ENV DEBUG="false" \
     AccessFolder="/mnt" \
@@ -39,18 +44,15 @@ ENV DEBUG="false" \
 
 COPY --from=builder /go/src/github.com/rclone/rclone/rclone /usr/local/sbin/
 
-RUN apk --no-cache upgrade \
-    && apk add --no-cache --update ca-certificates fuse fuse-dev curl gnupg \
-    && echo "Installing S6 Overlay" \
-    && curl -o /tmp/s6-overlay.tar.gz -L \
-    "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${OVERLAY_ARCH}.tar.gz" \
-    && curl -o /tmp/s6-overlay.tar.gz.sig -L \
-    "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${OVERLAY_ARCH}.tar.gz.sig" \
-    && gpg --keyserver pgp.surfnet.nl --recv-keys ${OVERLAY_KEY} \
-    && gpg --verify /tmp/s6-overlay.tar.gz.sig /tmp/s6-overlay.tar.gz \
-    && tar xzf /tmp/s6-overlay.tar.gz -C / \
-    && apk del curl gnupg \
-    && rm -rf /tmp/* /var/cache/apk/* /var/lib/apk/lists/*
+RUN \
+    apk --no-cache upgrade && \
+        apk add --no-cache --update \
+            ca-certificates \
+            fuse \
+            fuse-dev \
+            bash \
+            curl && \
+    rm -rf /tmp/* /var/cache/apk/* /var/lib/apk/lists/*
 
 COPY rootfs/ /
 

@@ -15,7 +15,9 @@ RUN apk add --no-cache --update \
     ca-certificates \
     go \
     git \
-    build-base && \
+    build-base
+    
+RUN \
     git clone https://github.com/rclone/rclone.git && \
     cd rclone && \
     go build

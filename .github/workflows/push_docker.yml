@@ -25,7 +25,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ghcr.io/marcos1/docker-rclone-mount
+          images: marcos187/docker-rclone
           tags: |
             type=sha
             type=raw,value=latest,enable={{is_default_branch}}

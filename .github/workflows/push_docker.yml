@@ -45,7 +45,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           tags:  ${{ steps.meta.outputs.tags }}
-          platforms: linux/amd64,linux/arm64,linux/386,linux/arm/v7,linux/arm/v6
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v8
           file: ./Dockerfile
       -
         name: push build
@@ -53,5 +53,5 @@ jobs:
         with:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          platforms: linux/amd64,linux/arm64,linux/386,linux/arm/v7
+          platforms: inux/amd64,linux/arm64,linux/arm/v7,linux/arm/v8
           file: ./Dockerfile

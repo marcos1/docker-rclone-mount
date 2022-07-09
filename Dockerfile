@@ -17,7 +17,8 @@ RUN \
         ca-certificates \
         go \
         git \
-        gcc
+        gcc \
+        sg++
 
 RUN \
     echo "*** Cloning rlcone source ***" && \

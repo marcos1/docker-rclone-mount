@@ -18,7 +18,7 @@ RUN \
         go \
         git \
         gcc \
-        sg++
+        g++
 
 RUN \
     echo "*** Cloning rlcone source ***" && \

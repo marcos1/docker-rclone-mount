@@ -21,10 +21,10 @@ RUN \
 
 RUN \
     echo "*** Cloning rlcone source ***" && \
-    git clone https://github.com/rclone/rclone.git \
-    && cd rclone && \
+    git clone https://github.com/rclone/rclone.git && \
+    cd rclone && \
     echo "*** Building Rclone Source ***" && \
-    && go build && \
+    go build && \
     echo "*** Finished building source ***"
 
 

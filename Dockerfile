@@ -1,8 +1,3 @@
-ARG OVERLAY_VERSION="v3.1.1.2"
-ARG OVERLAY_ARCH
-
-ARG RCLONE_VERSION
-
 ## Image
 FROM ghcr.io/linuxserver/baseimage-alpine:3.15
 

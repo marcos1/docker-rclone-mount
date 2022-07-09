@@ -1,5 +1,5 @@
-## Image
-FROM ghcr.io/linuxserver/baseimage-alpine:3.15
+FROM ghcr.io/linuxserver/baseimage-alpine:edge
+
 
 ARG OVERLAY_VERSION
 ARG OVERLAY_ARCH

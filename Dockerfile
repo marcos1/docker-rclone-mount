@@ -1,32 +1,32 @@
-ARG RCLONE_VERSION="v1.58.1"
+# ARG RCLONE_VERSION="v1.58.1"
 
 
 # Builder
-FROM golang:alpine AS builder
+# FROM golang:alpine AS builder
 
-ARG RCLONE_VERSION
+# ARG RCLONE_VERSION
 
-WORKDIR /go/src/github.com/rclone/rclone/
+# WORKDIR /go/src/github.com/rclone/rclone/
 
-ENV GOPATH="/go" \
-    GO111MODULE="on"
+# ENV GOPATH="/go" \
+#     GO111MODULE="on"
 
-RUN \
-    echo "*** Installing packages ***" && \
-    apk add --no-cache --update \
-        ca-certificates \
-        go \
-        git \
-        gcc \
-        g++
+# RUN \
+#     echo "*** Installing packages ***" && \
+#     apk add --no-cache --update \
+#         ca-certificates \
+#         go \
+#         git \
+#         gcc \
+#         g++
 
-RUN \
-    echo "*** Cloning rlcone source ***" && \
-    git clone https://github.com/rclone/rclone.git && \
-    cd rclone && \
-    echo "*** Building Rclone Source ***" && \
-    go build && \
-    echo "*** Finished building source ***"
+# RUN \
+#     echo "*** Cloning rlcone source ***" && \
+#     git clone https://github.com/rclone/rclone.git && \
+#     cd rclone && \
+#     echo "*** Building Rclone Source ***" && \
+#     go build && \
+#     echo "*** Finished building source ***"
 
 
 
@@ -52,7 +52,8 @@ RUN \
             fuse \
             fuse-dev \
             bash \
-            curl && \
+            curl \
+            rclone && \
     rm -rf /tmp/* /var/cache/apk/* /var/lib/apk/lists/*
 
 COPY rootfs/ /

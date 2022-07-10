@@ -59,7 +59,7 @@ COPY rootfs/ /
 
 VOLUME ["/mnt"]
 
-ENTRYPOINT ["/init"]
+#ENTRYPOINT ["/init"]
 
 # Use this docker Options in run
 # --cap-add SYS_ADMIN --device /dev/fuse --security-opt apparmor:unconfined
